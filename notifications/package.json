@@ -1,0 +1,18 @@
+{
+  "name": "notifications",
+  "version": "1.0.0",
+  "description": "Notifications through the node http server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "express-ws": "^5.0.2",
+    "websocket": "^1.0.34",
+    "ws": "^8.11.0"
+  }
+}
