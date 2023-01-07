@@ -1,28 +1,34 @@
-var express = require('express');
-var expressWs = require('express-ws');
-var expressWs = expressWs(express());
-var app = expressWs.app;
+const express = require('express');
+const express_ws = require('express-ws');
+const expressWs = express_ws(express());
+const app = expressWs.app;
+const cors = require('cors');
+const port = 8002;
+
+app.use(cors());
 
 app.use(express.static('public'));
 
-var aWss = expressWs.getWss('/');
+const aWss = expressWs.getWss('/');
 
 app.get('/', (req, res) => {
+    const randomNumber = Math.floor(Math.random() * 100) + 1;
+    // console.log(randomNumber);
+    res.status(200).json({ "random number": `${randomNumber}` });
+});
+
+app.get('/ws', (req, res) => {
     aWss.clients.forEach(function (client) {
         client.send("Someone visited the REST endpoint");
     });
 	res.status(200).json({'Response': 'Success'});
 });
 
-app.ws('/', function(ws, req) {
-    console.log('Socket Connected');
-    ws.onmessage = function(msg) {
-    aWss.clients.forEach(function (client) {
-        client.send(msg.data);
-    });
-    };
+app.ws('/ws', function(ws, req) {
 });
 
-app.listen(9002);
+app.listen(port, (err) => {
+	console.log("Listening on port " + port);
+});
 
 
