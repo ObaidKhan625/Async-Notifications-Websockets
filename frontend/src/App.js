@@ -7,14 +7,8 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 
 function App() {
   const [notifications, setNotifications] = useState(0);
-  const [randomNumber, setRandomNumber] = useState(0);
   const ws = new WebSocket("ws://localhost:80/ws");
-  const url = 'http://localhost:80';
   useEffect(() => {
-    fetch(url)
-    .then(response => response.json())
-    .then(response => setRandomNumber(response["random number"]))
-    .catch(err => console.log(err));
     ws.onmessage = message => {
       console.log(`Message from server: ${message.data}`);
       setNotifications(notifications => notifications+1);
@@ -42,7 +36,6 @@ function App() {
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
-        {randomNumber}
       </Container>
     </Navbar>
   );
